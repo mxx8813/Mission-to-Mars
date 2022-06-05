@@ -33,7 +33,7 @@ def mars_news(browser):
 
     # Scrape Mars News
     # Visit the mars nasa news site
-    url = url = 'https://redplanetscience.com/'
+    url = url = 'http://mars.nasa.gov/news/'
     browser.visit(url)
 
     # Optional delay for loading the page
@@ -49,17 +49,17 @@ def mars_news(browser):
         # Use the parent element to find the first 'a' tag and save it as 'news_title'
         news_title = slide_elem.find('div', class_='content_title').get_text()
         # Use the parent element to find the paragraph text
-        news_p = slide_elem.find('div', class_='article_teaser_body').get_text()
+        news_paragraph = slide_elem.find('div', class_='article_teaser_body').get_text()
 
     except AttributeError:
         return None, None
 
-    return news_title, news_p
+    return news_title, news_paragraph
 
 
 def featured_image(browser):
     # Visit URL
-    url = 'https://spaceimages-mars.com'
+    url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mar'
     browser.visit(url)
 
     # Find and click the full image button
@@ -118,7 +118,7 @@ def mars_facts():
     # Add try/except for error handling
     try:
         # Use 'read_html' to scrape the facts table into a dataframe
-        df=pd.read_html('https://space-facts.com/mars/')[0]
+        df=pd.read_html('http://space-facts.com/mars/')[0]
 
     except BaseException:
         return None
@@ -129,6 +129,7 @@ def mars_facts():
 
     # Convert dataframe into HTML format, add bootstrap
     return df.to_html()
+
 if __name__ == "__main__":
 
     # If running as script, print scraped data
